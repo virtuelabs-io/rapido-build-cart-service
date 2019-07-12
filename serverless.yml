@@ -1,4 +1,4 @@
-service: CustomerService
+service: CartService
 
 provider:
   name: aws
