@@ -6,7 +6,7 @@ Service responsible for all cart data
 ## API's Available
 
 - **Cart Item(s)**
-  - GET (one or all)
+  - GET
   - POST
   - PUT
   - DELETE
