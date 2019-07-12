@@ -2,11 +2,6 @@
 
 ## API's remaining
 
-* getCartItems
-* addCartItem
-* getInCartItems
-* getSavedForLaterItems
-* updateCartItem
-* updateCartItems
+* putCartItems
 * deleteCartItems
-* saveForLaterCartItem
+* putSaveForLaterCartItem

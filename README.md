@@ -1,33 +1,19 @@
 [![Build Status](https://dev.azure.com/reddyhorcrux/Rapidobuild.com/_apis/build/status/virtuelabs-io.rapido-build-customer-service?branchName=master)](https://dev.azure.com/reddyhorcrux/Rapidobuild.com/_build/latest?definitionId=11&branchName=master)
 # Customer Service
 
-Service responsible for all customer data
+Service responsible for all cart data
 
 ## API's Available
 
-- **getCustomerCompanyDetails**
-  - GET
+- **Cart Item(s)**
+  - GET (one or all)
   - POST
   - PUT
   - DELETE
-- **getCustomerAddress**
-  - GET
-  - GETLIST
-  - POST
-  - PUT
-  - DELETE
-  - DELETELIST
-- **getCustomerPaymentDetails**
-  - GET
-  - GETLIST
-  - POST
-  - PUT
-  - DELETE
-  - DELETELIST
 
 # Build and deploy 
 
-Create the domain if it dosent exist. This is a oneoff command which need to run
+Create the domain if it dosent exist. This is a one-off command which need to run
 
 ```sh
 # To create

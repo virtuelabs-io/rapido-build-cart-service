@@ -38,10 +38,10 @@ package:
     - LICENSE
 
 functions:
-  deleteCustomerAddress:
-    name: deleteCustomerAddress-${self:provider.stage}
-    role: CustomerFunctionsLambdaRole
-    handler: src/customer-address/deleteCustomerAddress.fun
+  upsertCartItem:
+    name: upsertCartItem-${self:provider.stage}
+    role: CartFunctionsLambdaRole
+    handler: src/cart-item/upsertCartItem.fun
     memorySize: 128
     timeout: 10
     environment:
@@ -51,7 +51,157 @@ functions:
       USERNAME: ${self:provider.username}
       PASSWORD: ${self:provider.password}
     tags:
-      purpose: lambda function to delete customer address
+      purpose: lambda function to upsert cart item
+    events:
+      - http:
+          path: /cart/item
+          method: post
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${self:provider.cognito-arn}
+            claims:
+              - phone_number
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - Authorization
+  getCartItems:
+    name: getCartItems-${self:provider.stage}
+    role: CartFunctionsLambdaRole
+    handler: src/cart-item/getCartItems.fun
+    memorySize: 128
+    timeout: 10
+    environment:
+      HOST: ${self:provider.host}
+      PORT: ${self:provider.port}
+      DATABASE: ${self:provider.database}
+      USERNAME: ${self:provider.username}
+      PASSWORD: ${self:provider.password}
+    tags:
+      purpose: lambda function to get cart items
+    events:
+      - http:
+          path: /cart/items
+          method: get
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${self:provider.cognito-arn}
+            claims:
+              - phone_number
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - Authorization
+  getInCartItems:
+    name: getInCartItems-${self:provider.stage}
+    role: CartFunctionsLambdaRole
+    handler: src/cart-item/getInCartItems.fun
+    memorySize: 128
+    timeout: 10
+    environment:
+      HOST: ${self:provider.host}
+      PORT: ${self:provider.port}
+      DATABASE: ${self:provider.database}
+      USERNAME: ${self:provider.username}
+      PASSWORD: ${self:provider.password}
+    tags:
+      purpose: lambda function to get in cart items
+    events:
+      - http:
+          path: /cart/in-cart-items
+          method: get
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${self:provider.cognito-arn}
+            claims:
+              - phone_number
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - Authorization
+  getSavedForLaterCartItems:
+    name: getSavedForLaterCartItems-${self:provider.stage}
+    role: CartFunctionsLambdaRole
+    handler: src/cart-item/getSavedForLaterCartItems.fun
+    memorySize: 128
+    timeout: 10
+    environment:
+      HOST: ${self:provider.host}
+      PORT: ${self:provider.port}
+      DATABASE: ${self:provider.database}
+      USERNAME: ${self:provider.username}
+      PASSWORD: ${self:provider.password}
+    tags:
+      purpose: lambda function to get getSavedForLaterCartItems cart items
+    events:
+      - http:
+          path: /cart/saved-for-later-items
+          method: get
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${self:provider.cognito-arn}
+            claims:
+              - phone_number
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - Authorization
+  upsertCartItems:
+    name: upsertCartItems-${self:provider.stage}
+    role: CartFunctionsLambdaRole
+    handler: src/cart-item/upsertCartItems.fun
+    memorySize: 128
+    timeout: 10
+    environment:
+      HOST: ${self:provider.host}
+      PORT: ${self:provider.port}
+      DATABASE: ${self:provider.database}
+      USERNAME: ${self:provider.username}
+      PASSWORD: ${self:provider.password}
+    tags:
+      purpose: lambda function to upsert cart items
+    events:
+      - http:
+          path: /cart/items
+          method: post
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${self:provider.cognito-arn}
+            claims:
+              - phone_number
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - Authorization
+  deleteCartItem:
+    name: deleteCartItem-${self:provider.stage}
+    role: CartFunctionsLambdaRole
+    handler: src/cart-item/deleteCartItem.fun
+    memorySize: 128
+    timeout: 10
+    environment:
+      HOST: ${self:provider.host}
+      PORT: ${self:provider.port}
+      DATABASE: ${self:provider.database}
+      USERNAME: ${self:provider.username}
+      PASSWORD: ${self:provider.password}
+    tags:
+      purpose: lambda function to delete cart item
     events:
       - http:
           path: /cart/item/{id}
@@ -72,9 +222,36 @@ functions:
             headers:
               - Content-Type
               - Authorization
-
-plugins:
-  - serverless-domain-manager
+  deleteInCartItems:
+    name: deleteInCartItems-${self:provider.stage}
+    role: CartFunctionsLambdaRole
+    handler: src/cart-item/deleteInCartItems.fun
+    memorySize: 128
+    timeout: 10
+    environment:
+      HOST: ${self:provider.host}
+      PORT: ${self:provider.port}
+      DATABASE: ${self:provider.database}
+      USERNAME: ${self:provider.username}
+      PASSWORD: ${self:provider.password}
+    tags:
+      purpose: lambda function to delete in cart items
+    events:
+      - http:
+          path: /cart/in-items
+          method: delete
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${self:provider.cognito-arn}
+            claims:
+              - phone_number
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - Authorization
 
 resources:
   Resources:
