@@ -23,9 +23,9 @@ module.exports.fun = async (event, context, callback) => {
                 quantity,
                 in_cart
             )
-        VALUES (UUID_TO_BIN(?),?,?,?)
+        VALUES (UUID_TO_BIN(?),?, FLOOR(ABS(?)),?)
         ON DUPLICATE KEY UPDATE
-        quantity = ?,
+        quantity = FLOOR(ABS(?)),
         in_cart = ?
     `;
 
