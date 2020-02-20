@@ -24,6 +24,18 @@ steps:
     pip install awscli
   displayName: 'Installing AWS CLI'
 
+- script: |
+    cat ./config/dev.json
+    git clone https://github.com/elasticdog/transcrypt.git
+    cd transcrypt/
+    sudo ln -s ${PWD}/transcrypt /usr/local/bin/transcrypt
+    cd ../
+    transcrypt -c aes-256-cbc -p $ENCRYPTED_BY_ME
+    cat ./config/dev.json
+  displayName: 'Transcript Initialization'
+  env:
+    ENCRYPTED_BY_ME: $(ENCRYPTED_BY_ME)
+
 - task: Npm@1
   displayName: 'npm install'
   inputs:
@@ -57,13 +69,6 @@ steps:
   env:
     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-    COGNITO_ARN: $(COGNITO_ARN)
-    HOST: $(HOST)
-    PORT: $(PORT)
-    USERNAME: $(USERNAME)
-    PASSWORD: $(PASSWORD)
-    DATABASE: $(DATABASE)
-    CERTIFICATE_ARN: $(CERTIFICATE_ARN)
   condition: ne(variables['Build.SourceBranch'], 'refs/heads/master')
 
 - task: Npm@1
@@ -74,11 +79,4 @@ steps:
   env:
     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-    COGNITO_ARN: $(COGNITO_ARN)
-    HOST: $(HOST)
-    PORT: $(PORT)
-    USERNAME: $(USERNAME)
-    PASSWORD: $(PASSWORD)
-    DATABASE: $(DATABASE)
-    CERTIFICATE_ARN: $(CERTIFICATE_ARN)
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')

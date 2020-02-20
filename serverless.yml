@@ -3,8 +3,8 @@ service: CartService
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
-  region: eu-west-2
+  stage: ${opt:region, 'dev'}
+  region: ${opt:region, 'eu-west-2'}
   host: ${file(./config/${self:provider.stage}.json):database.host}
   port: ${file(./config/${self:provider.stage}.json):database.port}
   database: ${file(./config/${self:provider.stage}.json):database.database}
