@@ -30,7 +30,7 @@ steps:
     cd transcrypt/
     sudo ln -s ${PWD}/transcrypt /usr/local/bin/transcrypt
     cd ../
-    transcrypt -c aes-256-cbc -p $ENCRYPTED_BY_ME
+    transcrypt --yes -c aes-256-cbc -p $ENCRYPTED_BY_ME
     cat ./config/dev.json
   displayName: 'Transcript Initialization'
   env:
