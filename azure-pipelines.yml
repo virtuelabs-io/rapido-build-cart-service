@@ -70,13 +70,13 @@ steps:
   env:
     AWS_ACCESS_KEY_ID: $(DEV_AWS_ACCESS_KEY_ID)
     AWS_SECRET_ACCESS_KEY: $(DEV_AWS_SECRET_ACCESS_KEY)
-  condition: or(startsWith(variables['build.sourceBranch'], 'refs/heads/feature'), startsWith(variables['build.sourceBranch'], 'refs/heads/bug'))
+  condition: eq(variables['Build.Reason'], 'PullRequest')
 
 - task: Npm@1
   displayName: 'Deploying functions to STAGE'
   inputs:
     command: custom
-    customCommand: 'run dev-deploy' # will be changed to prod when we are going to go live
+    customCommand: 'run dev-deploy' # will be changed to stage when we are going to go live
   env:
     AWS_ACCESS_KEY_ID: $(DEV_AWS_ACCESS_KEY_ID)
     AWS_SECRET_ACCESS_KEY: $(DEV_AWS_SECRET_ACCESS_KEY)
